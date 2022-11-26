@@ -1,5 +1,6 @@
 import Enemy from "./Enemy"
 import Food from "./Food"
+import Hero from "./Hero"
 import Smile from "./Smile"
 import { keyPress, key } from "./keyboard"
 
@@ -12,6 +13,8 @@ const qtdEnemies = 6
 let enemies = Array.from({length:qtdEnemies});
 
 const smile = new Smile(300, 100, 20, 6, 'yellow')
+
+const hero = new Hero(310,100,20,5,82,89,'img/goblin.png',FRAMES)
 
 let food = new Food(50,50,5,5,'blue');
 
@@ -48,14 +51,18 @@ const loop = () => {
 		smile.move(boundaries, key)
 		smile.paint(CTX)
 
-		enemies.forEach(e =>{
-			e.move(boundaries, 0) 
-			e.draw(CTX)
-			 //var = teste?verdadeiro:falso;
-			 gameover = !gameover 
-			 		? e.colide(smile)
-					: true;
-		})
+		// enemies.forEach(e =>{
+		// 	e.move(boundaries, 0) 
+		// 	e.draw(CTX)
+		// 	 //var = teste?verdadeiro:falso;
+		// 	 gameover = !gameover 
+		// 	 		? e.colide(smile)
+		// 			: true;
+		// })
+
+		console.log(key);
+		hero.move(boundaries, key)
+		hero.draw(CTX)
 
 		foodCollected = !foodCollected ? food.colide(smile) : true;
 
