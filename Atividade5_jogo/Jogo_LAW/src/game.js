@@ -41,6 +41,7 @@ const init = async () => {
 
     sound = await loadAudio('sounds/retrogame.ogg')
 	sound.volume = .5
+
 	theme = await loadAudio('sounds/illusory.mp3')
 	theme.volume = .3
 	theme.loop = true
@@ -121,6 +122,8 @@ const loop = () => {
         gameover = !gameover ? Heroi1.colide(Vilao3.hit) : true;
         gameover = !gameover ? Heroi1.colide(Vilao4.hit) : true;
         gameover = !gameover ? Heroi1.colide(Vilao5.hit) : true;
+
+        theme.currentTime == 0 && theme.play()
 
         if (gameover) {
             gameoverSound.play();
