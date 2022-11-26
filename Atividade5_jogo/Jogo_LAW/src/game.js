@@ -3,6 +3,7 @@ import Vilao from "./Vilao"
 import Food from "./Food"
 import Cenario from "./Cenario"
 import { keyPress, key } from "./keyboard"
+import { loadAudio, loadImage } from "./loaderAssets"
 
 let CTX
 let CANVAS
@@ -18,20 +19,32 @@ const Vilao3 = new Vilao(500,300,1.5,5,82,89,'img/goblin.png',FRAMES)
 const Vilao4 = new Vilao(700,400,1.5,5,82,89,'img/goblin.png',FRAMES)
 const Vilao5 = new Vilao(900,500,1.5,5,82,89,'img/goblin.png',FRAMES)
 
-var food = new Food(	Math.random()*1200,
-                        Math.random()*800,20,5,'Yellow');
+var food = new Food(	Math.random()*1150,
+                        Math.random()*750,1,0,5,5,'img/potions.png',FRAMES);
 
 let boundaries
 let gameover = false
 let foodCollected = false
 let anime;
 
-const init = () => {
+let sound
+let theme
+let gameoverSound
+
+const init = async () => {
 
 	CANVAS = document.querySelector('canvas')
 	CTX = CANVAS.getContext('2d')
 
-    
+    gameoverSound = await loadAudio('sounds/gameover.wav')
+    gameoverSound.volume= .6
+
+    sound = await loadAudio('sounds/retrogame.ogg')
+	sound.volume = .5
+	theme = await loadAudio('sounds/illusory.mp3')
+	theme.volume = .3
+	theme.loop = true
+    theme.play()
 		
     boundaries = {
 		width: CANVAS.width,
@@ -47,36 +60,37 @@ const loop = () => {
         Cenario1.draw(CTX,boundaries);
         
         if(!foodCollected){
+            // sound.play();
             if(food.colide(Heroi1.hit)){
-                food = new Food(	Math.random()*CANVAS.width,
-								Math.random()*CANVAS.height,20,5,'Yellow');
-                                foodCollected=false;
-                                Heroi1.eatFood();
+                sound.play();
+                food.move(boundaries)
+                foodCollected=false;
+                Heroi1.eatFood();
             }else if (food.colide(Vilao1.hit)){
-                food = new Food(	Math.random()*CANVAS.width,
-								Math.random()*CANVAS.height,20,5,'Yellow');
-                                foodCollected=false;
-                                Vilao1.eatFood();
+                sound.play();
+                food.move(boundaries)
+                foodCollected=false;
+                Vilao1.eatFood();
             }else if (food.colide(Vilao2.hit)){
-                food = new Food(	Math.random()*CANVAS.width,
-								Math.random()*CANVAS.height,20,5,'Yellow');
-                                foodCollected=false;
-                                Vilao2.eatFood();
+                sound.play();
+                food.move(boundaries)
+                foodCollected=false;
+                Vilao2.eatFood();
             }else if (food.colide(Vilao3.hit)){
-                food = new Food(	Math.random()*CANVAS.width,
-								Math.random()*CANVAS.height,20,5,'Yellow');
-                                foodCollected=false;
-                                Vilao3.eatFood();
+                sound.play();
+                food.move(boundaries)
+                foodCollected=false;
+                Vilao3.eatFood();
             }else if (food.colide(Vilao4.hit)){
-                food = new Food(	Math.random()*CANVAS.width,
-								Math.random()*CANVAS.height,20,5,'Yellow');
-                                foodCollected=false;
-                                Vilao4.eatFood();
+                sound.play();
+                food.move(boundaries)
+                foodCollected=false;
+                Vilao4.eatFood();
             }else if (food.colide(Vilao5.hit)){
-                food = new Food(	Math.random()*CANVAS.width,
-								Math.random()*CANVAS.height,20,5,'Yellow');
-                                foodCollected=false;
-                                Vilao5.eatFood();
+                sound.play();
+                food.move(boundaries)
+                foodCollected=false;
+                Vilao5.eatFood();
             }
         }
 
@@ -109,6 +123,7 @@ const loop = () => {
         gameover = !gameover ? Heroi1.colide(Vilao5.hit) : true;
 
         if (gameover) {
+            gameoverSound.play();
 			console.error('DEAD!!!')
 			cancelAnimationFrame(anime)
 		} else	anime = requestAnimationFrame(loop)
