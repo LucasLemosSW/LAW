@@ -1,9 +1,51 @@
 
-		body {
-			display: flex;
-			justify-content: center;
-		}
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
 
-		canvas {
-			border: 1px solid black;
-		}
+body>div{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+body>div>p{
+	color: blue;
+	font-size: 24px;
+	font-weight: bold;
+	line-height: 24px;
+	margin: 2px;
+}
+body>div>p>span{
+	color: rgb(32, 32, 138);
+	font-size: 20px;
+}
+
+canvas {
+	border: 1px solid black;
+}
+
+@keyframes endgame {
+	from {color: red;}
+	to {color: black;}
+  }
+
+.default{
+	display: none;
+}
+
+.gameOver{
+	display: block;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	position: absolute;
+	top: 200px;
+	left: 450px;
+	font-size: 82px;
+	color: red;
+	font-weight: bold;
+	letter-spacing: 10px;
+	animation-name: endgame;
+	animation-duration: 8s;
+}

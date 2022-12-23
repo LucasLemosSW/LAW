@@ -8,6 +8,9 @@ import { loadAudio, loadImage } from "./loaderAssets"
 let CTX
 let CANVAS
 const FRAMES = 15
+let score_hero
+let score_goblin
+let endGameMsg
 
 const Cenario1 = new Cenario('img/cenario.jpg')
 
@@ -26,15 +29,23 @@ let boundaries
 let gameover = false
 let foodCollected = false
 let anime;
+let heroScore=0;
+let goblinScore=0;
+
 
 let sound
 let theme
 let gameoverSound
 
+
 const init = async () => {
 
 	CANVAS = document.querySelector('canvas')
 	CTX = CANVAS.getContext('2d')
+
+    score_hero=document.getElementById('hero_score');
+    score_goblin=document.getElementById('goblin_score');
+    endGameMsg=document.getElementById('endGameMsg');
 
     gameoverSound = await loadAudio('sounds/gameover.wav')
     gameoverSound.volume= .6
@@ -67,31 +78,37 @@ const loop = () => {
                 food.move(boundaries)
                 foodCollected=false;
                 Heroi1.eatFood();
+                refresh_score("hero");
             }else if (food.colide(Vilao1.hit)){
                 sound.play();
                 food.move(boundaries)
                 foodCollected=false;
                 Vilao1.eatFood();
+                refresh_score("goblin");
             }else if (food.colide(Vilao2.hit)){
                 sound.play();
                 food.move(boundaries)
                 foodCollected=false;
                 Vilao2.eatFood();
+                refresh_score("goblin");
             }else if (food.colide(Vilao3.hit)){
                 sound.play();
                 food.move(boundaries)
                 foodCollected=false;
                 Vilao3.eatFood();
+                refresh_score("goblin");
             }else if (food.colide(Vilao4.hit)){
                 sound.play();
                 food.move(boundaries)
                 foodCollected=false;
                 Vilao4.eatFood();
+                refresh_score("goblin");
             }else if (food.colide(Vilao5.hit)){
                 sound.play();
                 food.move(boundaries)
                 foodCollected=false;
                 Vilao5.eatFood();
+                refresh_score("goblin");
             }
         }
 
@@ -128,9 +145,23 @@ const loop = () => {
         if (gameover) {
             gameoverSound.play();
 			console.error('DEAD!!!')
+            endGameMsg.classList.remove("default")
+            endGameMsg.classList.add("gameOver")
 			cancelAnimationFrame(anime)
+
 		} else	anime = requestAnimationFrame(loop)
 	}, 1000 / FRAMES)
+}
+
+function refresh_score(character){
+    
+    if(character=='hero')
+        heroScore++;
+    else
+        goblinScore++;
+
+    score_hero.innerHTML =  `${heroScore}`;
+    score_goblin.innerHTML = `${goblinScore}`;
 }
 
 export { init }

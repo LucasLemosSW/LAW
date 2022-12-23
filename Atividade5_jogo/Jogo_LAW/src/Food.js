@@ -16,6 +16,8 @@ export default class Food extends Personagem{
 		this.cellHeight= 16
 		this.totalSprites = 3
 
+		
+
 	}
 
 	move(boundaries){
