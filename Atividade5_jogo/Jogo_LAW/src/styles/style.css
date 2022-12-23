@@ -40,8 +40,9 @@ canvas {
 	display: block;
 	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 	position: absolute;
-	top: 200px;
-	left: 450px;
+	width: fit-content;
+	top: 25vh; /* For 100% screen height */
+    left:  30vw; /* For 100% screen width */
 	font-size: 82px;
 	color: red;
 	font-weight: bold;
